@@ -28,19 +28,5 @@ module.exports = webpackMerge(baseWebpackConfig, {
       skipWaiting: true,
       maximumFileSizeToCacheInBytes: 50 * 1000 * 1000
     })
-  ],
-  // 开发服务器配置
-  devServer: {
-    historyApiFallback: true, // 当找不到路径时候，默认加载index.html文件
-    contentBase: false, // 指定静态资源服务器目录，需要静态时候开启
-    port: 8080, // 指定服务器端口
-    publicPath: '/', // 访问资源加前缀
-    proxy: {
-      // 接口请求代理
-      '/api': {
-        secure: false,
-        target: 'http://127.0.0.1:4000', // mock server
-      },
-    },
-  },
+  ]
 })

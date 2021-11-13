@@ -13,6 +13,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const {GenerateSW} = require('workbox-webpack-plugin')
 
 const resolve = str => path.resolve(__dirname, str)
 const assetsPath = _path => path.join('static', _path)
@@ -34,7 +35,11 @@ module.exports = webpackMerge(baseWebpackConfig, {
       },
     }),
     new CleanWebpackPlugin(),
-    new BundleAnalyzerPlugin(),
+    new GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 50 * 1000 * 1000
+    })
   ],
   // 构建优化
   optimization: {
