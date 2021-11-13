@@ -6,6 +6,7 @@ import AppRouter from '@/router'
 import store from './store'
 import PrimaryLayout from '_l/primary'
 import styles from './app.less'
+console.log('111');
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js').then(registration => {
