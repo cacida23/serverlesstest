@@ -9,7 +9,8 @@ import styles from './app.less'
 console.log('111');
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js').then(registration => {
+    // sw.js 注册失败，因为sw.js不是期望的格式
+      navigator.serviceWorker.register('service-worker.js').then(registration => {
       console.log('SW registered: ', registration);
       }).catch(registrationError => {
       console.log('SW registration failed: ', registrationError);

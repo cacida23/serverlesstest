@@ -26,7 +26,6 @@ module.exports = webpackMerge(baseWebpackConfig, {
       filename: resolve('../dist/index.html'), // html模版的生成目录
       template: 'index.html', // html模板
       inject: true, // true[默认值]，script标签插入到</body>前
-      hash: true, // scirpt标签src后面会加上hash，[src="xxx.js?hash"]
       // html文件进行压缩
       minify: {
         removeComments: true, // 去掉注释
@@ -38,7 +37,18 @@ module.exports = webpackMerge(baseWebpackConfig, {
     new GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
-      maximumFileSizeToCacheInBytes: 50 * 1000 * 1000
+      maximumFileSizeToCacheInBytes: 50 * 1000 * 1000,
+      // mode: 'production',
+      //如果不想从本地去加载对应的文件
+      // importWorkboxFrom: 'disabled',
+      // // 把local模式导出的文件, 先部署获取到cdn链接, 在写死就ok
+      // importScripts: 'https://cdn/workbox-sw.js',
+      runtimeCaching: [
+        {
+          handler: 'NetworkFirst',
+          urlPattern: '/',
+        },
+      ],
     })
   ],
   // 构建优化
@@ -54,7 +64,7 @@ module.exports = webpackMerge(baseWebpackConfig, {
           compress: {
             unused: true,
             drop_debugger: true,
-            drop_console: true,
+            drop_console: false,
           },
           output: {
             comments: false, // 去掉注释
@@ -101,13 +111,13 @@ module.exports = webpackMerge(baseWebpackConfig, {
           test: /[\\/]node_modules[\\/](antd)[\\/]/, // (module) => (/antd/.test(module.context))
         },
         // react 全家桶
-        "react-全家桶": {
+        "react-x": {
           priority: 2, // 优先级别
           test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|mobx|mobx-react)[\\/]/,
         },
         // 其他库
         commons: {
-          priority: 1, // 优先级别
+          priority: 1, // 优先co级别
           test: /[\\/]node_modules[\\/](moment|axios|lodash)[\\/]/,
         },
       },
